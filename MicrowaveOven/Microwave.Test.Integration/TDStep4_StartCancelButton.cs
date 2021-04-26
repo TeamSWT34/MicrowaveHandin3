@@ -3,7 +3,7 @@
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class TDStep4_Door
+    public class TDStep4_StartCancelButton
     {
         
     }
