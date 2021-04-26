@@ -106,7 +106,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Display_TimeLoop_LogLine_Time_Output()
+        public void Display_LogLine_Time_Output()
         {
             int min = 1;
             int sec = 0;
