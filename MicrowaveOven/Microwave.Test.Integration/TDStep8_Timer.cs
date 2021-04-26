@@ -55,25 +55,27 @@ namespace Microwave.Test.Integration
         }
 
 
-        [Test]
-        public void Timer_Sleeps_LogLine_Time_Output()
+        [TestCase(1,1,0,59)]
+        [TestCase(2, 5, 1, 55)]
+        [TestCase(10, 12,9,48)]
+        public void Timer_Sleeps_LogLine_Time_Output(int startMin, int waitTimeInSec,int expectMin,int expectSec)
         {
-            int min = 1;
-            int sec = 0;
-            int sleepMilSec = 2000;
-
-            
+            int zeroSec = 0;
 
             sut_PowerButton.Press();
-            sut_TimeButton.Press();
+
+            for (int i = 0; i < startMin; i++)
+                sut_TimeButton.Press();
+
+
+
             sut_StartCancelButton.Press();
 
-            fakeOutput.Received().OutputLine($"Display shows: {min:D2}:{sec:D2}");
+            fakeOutput.Received().OutputLine($"Display shows: {startMin:D2}:{zeroSec:D2}");
 
-            Thread.Sleep(sleepMilSec);
+            Thread.Sleep(waitTimeInSec*1000);
 
-            int timeAfterSleep = min * 60 - sleepMilSec / 1000;
-            fakeOutput.Received().OutputLine($"Display shows: {0:D2}:{timeAfterSleep:D2}");
+            fakeOutput.Received().OutputLine($"Display shows: {expectMin:D2}:{expectSec:D2}");
 
         }
 

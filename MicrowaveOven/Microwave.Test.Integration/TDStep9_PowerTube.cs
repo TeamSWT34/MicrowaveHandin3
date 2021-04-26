@@ -51,13 +51,17 @@ namespace Microwave.Test.Integration
             cookController.UI = userInterface;
         }
 
-        [Test]
-        public void PowerTube_StartStopButton_Start_Output()
+        [TestCase(1,50)]
+        [TestCase(2,100)]
+        [TestCase(5, 250)]
+        [TestCase(10, 500)]
+        [TestCase(14, 700)]
+        public void PowerTube_StartStopButton_Start_Output(int press,  int power)
         {
-            int power = 100;
+            for (int i = 0; i < press; i++)
+                sut_PowerButton.Press();
+            
 
-            sut_PowerButton.Press();
-            sut_PowerButton.Press();
             sut_TimeButton.Press();
             sut_StartCancelButton.Press();
             fakeOutput.Received().OutputLine($"PowerTube works with {power}");
