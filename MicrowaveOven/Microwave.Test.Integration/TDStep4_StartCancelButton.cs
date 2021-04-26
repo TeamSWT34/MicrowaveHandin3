@@ -9,10 +9,11 @@ namespace Microwave.Test.Integration
     [TestFixture]
     public class TDStep4_StartCancelButton
     {
-		private IButton sut_PowerButton;
-        private IButton sut_TimeButton;
-        private IButton sut_StartCancelButton;
-        private IDoor sut_Door;
+		private Button sut_PowerButton;
+        private Button sut_TimeButton;
+        private Button sut_StartCancelButton;
+        private Door sut_Door;
+
         private UserInterface userInterface;
         private IDisplay fakeDisplay;
         private ILight fakeLight;

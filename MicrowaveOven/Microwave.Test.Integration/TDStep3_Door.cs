@@ -9,10 +9,11 @@ namespace Microwave.Test.Integration
     [TestFixture]
     public class TDStep3_Door
     {
-	    private IButton sut_PowerButton;
-	    private IButton sut_TimeButton;
-	    private IButton fakeStartCancelButton;
-	    private IDoor sut_Door;
+	    private Button sut_PowerButton;
+	    private Button sut_TimeButton;
+        private Door sut_Door;
+
+		private IButton fakeStartCancelButton;
 	    private UserInterface userInterface;
 	    private IDisplay fakeDisplay;
 	    private ILight fakeLight;

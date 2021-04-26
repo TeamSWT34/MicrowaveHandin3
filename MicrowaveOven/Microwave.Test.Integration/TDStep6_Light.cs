@@ -9,19 +9,21 @@ namespace Microwave.Test.Integration
     [TestFixture]
     public class TDStep6_Light
     {
-        private IButton sut_PowerButton;
-        private IButton sut_TimeButton;
-        private IButton sut_StartCancelButton;
-        private IDoor sut_Door;
+        private Button sut_PowerButton;
+        private Button sut_TimeButton;
+        private Button sut_StartCancelButton;
+        private Door sut_Door;
 
-        private ICookController sut_CookController;
+        private CookController cookController;
+        private Light light;
+
         private ITimer fakeTimer;
         private IPowerTube fakePowerTube;
 
 
         private UserInterface userInterface;
         private IDisplay fakeDisplay;
-        private ILight sut_Light;
+        
         private IOutput fakeOutput;
 
 
@@ -32,8 +34,8 @@ namespace Microwave.Test.Integration
             sut_TimeButton = new Button();
             sut_StartCancelButton = new Button();
             sut_Door = new Door();
-            sut_CookController = new CookController(fakeTimer, fakeDisplay, fakePowerTube);
-            sut_Light = new Light(fakeOutput);
+            cookController = new CookController(fakeTimer, fakeDisplay, fakePowerTube);
+            light = new Light(fakeOutput);
 
             fakeDisplay = Substitute.For<IDisplay>();
             fakeTimer = Substitute.For<ITimer>();
@@ -41,7 +43,7 @@ namespace Microwave.Test.Integration
 
             userInterface = new UserInterface(sut_PowerButton, sut_TimeButton,
                 sut_StartCancelButton, sut_Door, fakeDisplay,
-                sut_Light, sut_CookController);
+                light, cookController);
         }
 
 /*

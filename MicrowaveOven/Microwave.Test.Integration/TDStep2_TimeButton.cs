@@ -11,8 +11,8 @@ namespace Microwave.Test.Integration
     public class TDStep2_TimeButton
     {
     
-        private IButton sut_PowerButton;
-        private IButton sut_TimeButton;
+        private Button sut_PowerButton;
+        private Button sut_TimeButton;
         private IButton fakeStartCancelButton;
         private IDoor fakeDoor;
         private UserInterface userInterface;

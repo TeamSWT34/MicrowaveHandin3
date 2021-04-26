@@ -1,4 +1,5 @@
-﻿using Microwave.Classes.Boundary;
+﻿using System;
+using Microwave.Classes.Boundary;
 using Microwave.Classes.Controllers;
 using Microwave.Classes.Interfaces;
 using NSubstitute;
@@ -9,17 +10,18 @@ namespace Microwave.Test.Integration
     [TestFixture]
     public class TDStep5_CookController
     {
-        private IButton sut_PowerButton;
-        private IButton sut_TimeButton;
-        private IButton sut_StartCancelButton;
-        private IDoor sut_Door;
+        private Button sut_PowerButton;
+        private Button sut_TimeButton;
+        private Button sut_StartCancelButton;
+        private Door sut_Door;
         
-        private ICookController sut_CookController;
+        private CookController cookController;
         private ITimer fakeTimer;
         private IPowerTube fakePowerTube;
 
 
         private UserInterface userInterface;
+        private IUserInterface fakeUserInterface;
         private IDisplay fakeDisplay;
         private ILight fakeLight;
         
@@ -27,6 +29,7 @@ namespace Microwave.Test.Integration
         [SetUp]
         public void Setup()
         {
+
             sut_PowerButton = new Button();
             sut_TimeButton = new Button();
             sut_StartCancelButton = new Button();
@@ -35,36 +38,40 @@ namespace Microwave.Test.Integration
             fakeLight = Substitute.For<ILight>();
             fakeTimer = Substitute.For<ITimer>();
             fakePowerTube = Substitute.For<IPowerTube>();
-            sut_CookController = new CookController(fakeTimer, fakeDisplay,fakePowerTube);
+            fakeUserInterface = Substitute.For<IUserInterface>();
+
+            cookController = new CookController(fakeTimer, fakeDisplay,fakePowerTube, fakeUserInterface);
 
             userInterface = new UserInterface(sut_PowerButton, sut_TimeButton,
                 sut_StartCancelButton, sut_Door, fakeDisplay,
-                fakeLight, sut_CookController);
+                fakeLight, cookController);
+
+     
         }
 
-/*
+
         [Test]
         public void Cooking_Open_Door_StopCooking()
         {
             int powerValue = 50;
-            int timeInMin = 1;
-            int timeInSek = timeInMin * 60;
 
             sut_PowerButton.Press();
             sut_TimeButton.Press();
             sut_StartCancelButton.Press();
 
-            sut_CookController.StartCooking(powerValue, timeInSek);
-
-            sut_Door.Open();
-            sut_CookController.Stop();
-            fakeDisplay.Clear();
-
+            //Cooking Start
             fakeLight.Received().TurnOn();
+            sut_Door.Open();
+            //Cooking Stop
+
+            fakeDisplay.Clear();
 
             sut_Door.Close();
             fakeLight.TurnOff();
 
+
+            sut_PowerButton.Press();
+            fakeDisplay.Received(2).ShowPower(powerValue);
         }
 
 
@@ -72,23 +79,22 @@ namespace Microwave.Test.Integration
         public void Cooking_Start_StopButton_Press_StopCooking()
         {
             int powerValue = 50;
-            int timeInMin = 1;
-            int timeInSek = timeInMin * 60;
 
+            sut_PowerButton.Press();
             sut_PowerButton.Press();
             sut_TimeButton.Press();
             sut_StartCancelButton.Press();
 
-            sut_CookController.StartCooking(powerValue, timeInSek);
+            //Cooking Start
+            fakeLight.Received().TurnOn();
             sut_StartCancelButton.Press();
+            //Cooking Stop
 
-
-            sut_CookController.Stop();
             fakeDisplay.Clear();
             fakeLight.Received().TurnOff();
 
-            sut_Door.Open();
-            fakeLight.TurnOn();
+            sut_PowerButton.Press();
+            fakeDisplay.Received(2).ShowPower(powerValue);
 
         }
 
@@ -104,18 +110,13 @@ namespace Microwave.Test.Integration
             sut_TimeButton.Press();
             sut_StartCancelButton.Press();
 
-            sut_CookController.StartCooking(powerValue, timeInSek);
-            
+            //Cooking Start
+            fakeTimer.Expired += Raise.EventWith(this, EventArgs.Empty);
+            //Cooking Finished
 
-
-            sut_CookController.Stop();
-            fakeDisplay.Clear();
-            fakeLight.Received().TurnOff();
-
-            sut_Door.Open();
-            fakeLight.TurnOn();
+            fakeUserInterface.Received().CookingIsDone();
+            fakePowerTube.Received().TurnOff();
 
         }
-*/
     }
 }
