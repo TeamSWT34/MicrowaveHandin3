@@ -57,6 +57,7 @@ namespace Microwave.Classes.Controllers
             {
                 isCooking = false;
                 myPowerTube.TurnOff();
+                //myTimer.Stop(); // 
                 UI.CookingIsDone();
             }
         }

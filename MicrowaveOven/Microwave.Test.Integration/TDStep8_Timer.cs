@@ -62,7 +62,7 @@ namespace Microwave.Test.Integration
             int sec = 0;
             int sleepMilSec = 2000;
 
-            ManualResetEvent pause = new ManualResetEvent(false);
+            
 
             sut_PowerButton.Press();
             sut_TimeButton.Press();
@@ -84,7 +84,7 @@ namespace Microwave.Test.Integration
             int sec = 0;
             int sleepMilSec = 60000;
 
-            ManualResetEvent pause = new ManualResetEvent(false);
+            int count = 0;
 
             sut_PowerButton.Press();
             sut_TimeButton.Press();
@@ -92,18 +92,23 @@ namespace Microwave.Test.Integration
 
             fakeOutput.Received().OutputLine($"Display shows: {min:D2}:{sec:D2}");
 
-            Thread.Sleep(sleepMilSec);
+            timer.Expired += (o, e) =>
+            {
+                timer.TimerTick += (o2, e2) => count++;
+            };
+
+            Thread.Sleep(sleepMilSec+1000); // Add extra millisec to ensure to get over the expected time 
+            
 
             int timeAfterSleep = min * 60 - sleepMilSec / 1000;
             fakeOutput.Received().OutputLine($"Display shows: {0:D2}:{timeAfterSleep:D2}");
 
             fakePowerTube.Received().TurnOff();
-            
+
+            Thread.Sleep(5000);
+            Assert.AreEqual(0, count);
+
         }
-
         
-
-
-
     }
 }
