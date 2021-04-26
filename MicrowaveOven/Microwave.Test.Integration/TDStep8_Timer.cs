@@ -73,7 +73,7 @@ namespace Microwave.Test.Integration
             Thread.Sleep(sleepMilSec);
 
             int timeAfterSleep = min * 60 - sleepMilSec / 1000;
-            fakeOutput.Received().OutputLine($"Display shows: {00}:{timeAfterSleep:D2}");
+            fakeOutput.Received().OutputLine($"Display shows: {0:D2}:{timeAfterSleep:D2}");
 
         }
 
@@ -95,7 +95,7 @@ namespace Microwave.Test.Integration
             Thread.Sleep(sleepMilSec);
 
             int timeAfterSleep = min * 60 - sleepMilSec / 1000;
-            fakeOutput.Received().OutputLine($"Display shows: {00}:{timeAfterSleep:D2}");
+            fakeOutput.Received().OutputLine($"Display shows: {0:D2}:{timeAfterSleep:D2}");
 
             fakePowerTube.Received().TurnOff();
             
