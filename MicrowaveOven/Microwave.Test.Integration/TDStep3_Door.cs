@@ -9,7 +9,7 @@ namespace Microwave.Test.Integration
     [TestFixture]
     public class TDStep3_Door
     {
-	    private IButton sut_powerButton;
+	    private IButton sut_PowerButton;
 	    private IButton sut_TimeButton;
 	    private IButton fakeStartCancelButton;
 	    private IDoor sut_Door;
@@ -21,7 +21,7 @@ namespace Microwave.Test.Integration
 	    [SetUp]
 	    public void Setup()
 	    {
-		    sut_powerButton = new Button();
+			sut_PowerButton = new Button();
 		    sut_TimeButton = new Button();
 		    fakeStartCancelButton = Substitute.For<IButton>();
 		    sut_Door = new Door();
@@ -29,7 +29,7 @@ namespace Microwave.Test.Integration
 		    fakeLight = Substitute.For<ILight>();
 		    fakeCookController = Substitute.For<ICookController>();
 
-		    userInterface = new UserInterface(sut_powerButton, sut_TimeButton, 
+		    userInterface = new UserInterface(sut_PowerButton, sut_TimeButton, 
 			    fakeStartCancelButton, sut_Door, fakeDisplay,
 			    fakeLight, fakeCookController);
 	    }
@@ -40,7 +40,7 @@ namespace Microwave.Test.Integration
 			sut_Door.Open();
 			fakeLight.Received().TurnOn();
 
-			sut_powerButton.Press();
+			sut_PowerButton.Press();
 			fakeDisplay.Received(0).ShowPower(Arg.Any<int>());
 	    }
 
@@ -52,15 +52,15 @@ namespace Microwave.Test.Integration
 			sut_Door.Close();
 			fakeLight.Received().TurnOff();
 
-			sut_powerButton.Press();
+			sut_PowerButton.Press();
 			fakeDisplay.Received(1).ShowPower(Arg.Any<int>());
 		}
 
 	    [Test]
 	    public void PowerPress_OpenDoor_ClearDisplay_LightOn()
 	    {
-		    sut_powerButton.Press();
-		    sut_powerButton.Press();
+			sut_PowerButton.Press();
+			sut_PowerButton.Press();
 			fakeDisplay.Received().ShowPower(100);
 
 			sut_Door.Open();
@@ -71,7 +71,7 @@ namespace Microwave.Test.Integration
 			sut_Door.Close();
 			fakeLight.Received().TurnOff();
 
-			sut_powerButton.Press();
+			sut_PowerButton.Press();
 			fakeDisplay.Received(2).ShowPower(50);
 		}
 
@@ -79,8 +79,8 @@ namespace Microwave.Test.Integration
 	    [Test]
 	    public void TimePress_OpenDoor_ClearDisplay_LightOn()
 	    {
-		    sut_powerButton.Press();
-		    sut_powerButton.Press();
+			sut_PowerButton.Press();
+			sut_PowerButton.Press();
 			fakeDisplay.Received().ShowPower(100);
 
 			sut_TimeButton.Press();
@@ -95,7 +95,7 @@ namespace Microwave.Test.Integration
 			sut_Door.Close();
 			fakeLight.Received().TurnOff();
 
-			sut_powerButton.Press();
+			sut_PowerButton.Press();
 			fakeDisplay.Received(2).ShowPower(50);
 
 			sut_TimeButton.Press();

@@ -9,7 +9,7 @@ namespace Microwave.Test.Integration
     [TestFixture]
     public class TDStep1_PowerButton
     {
-        private Button sut_powerButton;
+        private Button sut_PowerButton;
         private IButton fakeTimeButton;
         private IButton fakeStartCancelButton;
         private IDoor fakeDoor;
@@ -17,12 +17,11 @@ namespace Microwave.Test.Integration
         private IDisplay fakeDisplay;
         private ILight fakeLight;
         private ICookController fakeCookController;
-        
 
         [SetUp]
         public void Setup()
         {
-            sut_powerButton = new Button();
+            sut_PowerButton = new Button();
             fakeTimeButton = Substitute.For<IButton>();
             fakeStartCancelButton = Substitute.For<IButton>();
             fakeDoor = Substitute.For<IDoor>();
@@ -30,9 +29,8 @@ namespace Microwave.Test.Integration
             fakeLight = Substitute.For<ILight>();
             fakeCookController = Substitute.For<ICookController>();
 
-            userInterface = new UserInterface(sut_powerButton, fakeTimeButton, fakeStartCancelButton, fakeDoor, fakeDisplay,
+            userInterface = new UserInterface(sut_PowerButton, fakeTimeButton, fakeStartCancelButton, fakeDoor, fakeDisplay,
                 fakeLight, fakeCookController);
-
         }
 
         //Press-Numbers, Watts-Value
@@ -41,19 +39,19 @@ namespace Microwave.Test.Integration
         [TestCase(14, 700)] //Max Boundary
         [TestCase(15, 50)] //Max Boundary + 1
         [TestCase(19, 250)] //Max Boundary + 1
-        public void Press_PowerButton_DisplayCorretValues(int press, int watts)
+        public void Press_PowerButton_DisplayCorrectValues(int press, int watts)
         {
             
             for (int i = 0; i < press-1; i++)
             {
-                sut_powerButton.Press();
+                sut_PowerButton.Press();
             }
 
             //press = 18;
             fakeDisplay.ClearReceivedCalls();
             fakeDisplay.Received(0).ShowPower(Arg.Any<int>());
 
-            sut_powerButton.Press();
+            sut_PowerButton.Press();
             fakeDisplay.Received().ShowPower(watts);
         }
 
