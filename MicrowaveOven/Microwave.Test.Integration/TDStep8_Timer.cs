@@ -86,16 +86,16 @@ namespace Microwave.Test.Integration
 
             int count = 0;
 
+            
+
             sut_PowerButton.Press();
             sut_TimeButton.Press();
             sut_StartCancelButton.Press();
 
             fakeOutput.Received().OutputLine($"Display shows: {min:D2}:{sec:D2}");
 
-            timer.Expired += (o, e) =>
-            {
-                timer.TimerTick += (o2, e2) => count++;
-            };
+            
+
 
             Thread.Sleep(sleepMilSec+1000); // Add extra millisec to ensure to get over the expected time 
             
@@ -104,6 +104,9 @@ namespace Microwave.Test.Integration
             fakeOutput.Received().OutputLine($"Display shows: {0:D2}:{timeAfterSleep:D2}");
 
             fakePowerTube.Received().TurnOff();
+
+            //test timer stopped after expire
+            timer.TimerTick += (o2, e2) => count++;
 
             Thread.Sleep(5000);
             Assert.AreEqual(0, count);
