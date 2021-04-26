@@ -100,6 +100,8 @@ namespace Microwave.Test.Integration
 
 			sut_TimeButton.Press();
 			fakeDisplay.Received(2).ShowTime(1, 0);
+
+			
 	    }
     }
 }
