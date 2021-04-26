@@ -34,28 +34,31 @@ namespace Microwave.Test.Integration
             sut_TimeButton = new Button();
             sut_StartCancelButton = new Button();
             sut_Door = new Door();
-            cookController = new CookController(fakeTimer, fakeDisplay, fakePowerTube);
-            light = new Light(fakeOutput);
+            
 
             fakeDisplay = Substitute.For<IDisplay>();
             fakeTimer = Substitute.For<ITimer>();
             fakePowerTube = Substitute.For<IPowerTube>();
+            fakeOutput = Substitute.For<IOutput>();
+
+            cookController = new CookController(fakeTimer, fakeDisplay, fakePowerTube);
+            light = new Light(fakeOutput);
 
             userInterface = new UserInterface(sut_PowerButton, sut_TimeButton,
                 sut_StartCancelButton, sut_Door, fakeDisplay,
                 light, cookController);
+
+            cookController.UI = userInterface;
         }
 
-/*
+
         [Test]
         public void Open_Door_LightOn_LogLine_Output()
         {
             string stringLine = "Light is turned on";
 
             sut_Door.Open();
-            sut_Light.TurnOn();
-
-            fakeOutput.OutputLine(stringLine);
+            fakeOutput.Received().OutputLine(stringLine);
         }
 
         [Test]
@@ -65,10 +68,9 @@ namespace Microwave.Test.Integration
 
             sut_Door.Open();
             sut_Door.Close();
-            sut_Light.TurnOff();
-             
-            fakeOutput.OutputLine(stringLine);
+
+            fakeOutput.Received().OutputLine(stringLine);
         }
-*/
+
     }
 }
