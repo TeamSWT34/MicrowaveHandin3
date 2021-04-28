@@ -38,7 +38,7 @@ namespace Microwave.Test.Integration
         [TestCase(10, 500)]
         [TestCase(14, 700)] //Max Boundary
         [TestCase(15, 50)] //Max Boundary + 1
-        [TestCase(19, 250)] //Max Boundary + 1
+        [TestCase(19, 250)] //Max Boundary + 5
         public void Press_PowerButton_DisplayCorrectValues(int press, int watts)
         {
             

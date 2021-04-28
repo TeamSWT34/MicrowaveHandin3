@@ -67,8 +67,6 @@ namespace Microwave.Test.Integration
             for (int i = 0; i < startMin; i++)
                 sut_TimeButton.Press();
 
-
-
             sut_StartCancelButton.Press();
 
             fakeOutput.Received().OutputLine($"Display shows: {startMin:D2}:{zeroSec:D2}");
@@ -85,10 +83,7 @@ namespace Microwave.Test.Integration
             int min = 1;
             int sec = 0;
             int sleepMilSec = 60000;
-
             int count = 0;
-
-            
 
             sut_PowerButton.Press();
             sut_TimeButton.Press();
@@ -96,11 +91,7 @@ namespace Microwave.Test.Integration
 
             fakeOutput.Received().OutputLine($"Display shows: {min:D2}:{sec:D2}");
 
-            
-
-
             Thread.Sleep(sleepMilSec+1000); // Add extra millisec to ensure to get over the expected time 
-            
 
             int timeAfterSleep = min * 60 - sleepMilSec / 1000;
             fakeOutput.Received().OutputLine($"Display shows: {0:D2}:{timeAfterSleep:D2}");

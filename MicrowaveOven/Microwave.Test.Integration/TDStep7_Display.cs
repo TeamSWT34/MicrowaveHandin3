@@ -108,10 +108,6 @@ namespace Microwave.Test.Integration
         [Test]
         public void Display_LogLine_Time_Output()
         {
-            int min = 1;
-            int sec = 0;
-            int timeInSec = min*60;
-
             sut_PowerButton.Press();
             sut_TimeButton.Press();
             sut_StartCancelButton.Press();

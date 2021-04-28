@@ -53,7 +53,7 @@ namespace Microwave.Test.Integration
 
 
         [Test]
-        public void TimePress_StartCancelButton_ClearDisplay_ResetValues()
+        public void TimePress_StartCancelButton_StartCooking()
         {
             int powerValue = 50;
             int timeInMin = 1;
