@@ -56,6 +56,7 @@ namespace Microwave.Test.Integration
         [TestCase(5, 250)]
         [TestCase(10, 500)]
         [TestCase(14, 700)]
+        [TestCase(15, 50)]
         public void PowerTube_StartStopButton_Start_Output(int press,  int power)
         {
             for (int i = 0; i < press; i++)
