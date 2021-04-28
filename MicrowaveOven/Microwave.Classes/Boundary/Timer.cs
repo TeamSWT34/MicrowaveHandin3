@@ -45,7 +45,7 @@ namespace Microwave.Classes.Boundary
             // Do what I should
             
             // ------------------- 
-            //TimeRemaining -= 1000; Old Fail is fix
+            //TimeRemaining -= 1000; //Old Fail is fix
             TimeRemaining --;
 
             TimerTick?.Invoke(this, EventArgs.Empty);

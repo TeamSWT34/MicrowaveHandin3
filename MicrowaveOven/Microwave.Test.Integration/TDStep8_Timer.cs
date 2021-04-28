@@ -60,6 +60,7 @@ namespace Microwave.Test.Integration
         [TestCase(10, 12,9,48)]
         public void Timer_Sleeps_LogLine_Time_Output(int startMin, int waitTimeInSec,int expectMin,int expectSec)
         {
+            const int LATENCY_MS = 100;
             int zeroSec = 0;
 
             sut_PowerButton.Press();
@@ -71,7 +72,7 @@ namespace Microwave.Test.Integration
 
             fakeOutput.Received().OutputLine($"Display shows: {startMin:D2}:{zeroSec:D2}");
 
-            Thread.Sleep(waitTimeInSec*1000);
+            Thread.Sleep(waitTimeInSec*1000 + LATENCY_MS);
 
             fakeOutput.Received().OutputLine($"Display shows: {expectMin:D2}:{expectSec:D2}");
 
